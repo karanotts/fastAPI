@@ -52,3 +52,28 @@ or concurrent:
     async def root():
         return {"message": "Hello concurrent World}
     
+
+Example:
+```
+@app.get("/items/{item_id}")
+async def get_items(item_id: int:
+    return {"item_id": item_id}
+```
+
+### Step 5: Start the webserver
+
+```
+uvicorn main:app --reload
+```
+
+### Step 6: Check the API!
+```
+
+$ curl http://127.0.0.1:8000/items/1
+{"item_id":1}
+
+$ curl http://127.0.0.1:8000/items/hello
+{"detail":[{"loc":["path","item_id"],"msg":"value is not a valid integer","type":"type_error.integer"}]}
+
+```
+![API](images/api_intro.png?raw=true "Swagger API GUI")
