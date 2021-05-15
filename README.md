@@ -77,3 +77,77 @@ $ curl http://127.0.0.1:8000/items/hello
 
 ```
 ![API](images/api_intro.png?raw=true "Swagger API GUI")
+
+<br>
+<hr>
+
+# SAMPLE APP
+
+## Create item function:
+```
+@app.post("/items")
+def post_item(item: Item):
+    db.append(item.dict())
+    return db[-1]
+```
+
+## Create item using the API:
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/items' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "beach ball",
+  "quantity": 1
+}'
+```
+
+## Get all items function:
+```
+@app.get("/items")
+def get_items():
+    return db
+```
+
+## Get all items in the API:
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/items' \
+  -H 'accept: application/json'
+
+[{"name": "beach ball","quantity": 1}]
+```
+
+## Get an item by ID function:
+```
+@app.get("/items/{item_id}")
+def get_item(item_id: int):
+    return db[item_id-1]
+```
+
+## Get an item by ID in the API:
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/items/1' \
+  -H 'accept: application/json'
+
+{"name":"beach ball","quantity":1}
+```
+
+## Delete an item by ID function:
+```
+@app.delete("/items/{item_id}")
+def delete_item(item_id: int):
+    db.pop(item_id-1)
+    return db
+```
+
+## Delete an item by ID in the API:
+```
+curl -X 'DELETE' \
+  'http://127.0.0.1:8000/items/1' \
+  -H 'accept: application/json'
+
+[]
+```
